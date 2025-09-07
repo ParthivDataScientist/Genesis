@@ -10,10 +10,11 @@ class AudioCapture:
     """
     A class to handle capturing audio from the mic in a seprate thread and putting it into a thread-safe queue
     """
-    def __init__(self):
+    def __init__(self,frame_length=None):
         self.audio_queue = queue.Queue()
         self.stream = None
         self.running = False
+        self.frame_length=frame_length
     
     def _audio_callback(self, indata, frames, time, status):
         if status:
@@ -27,10 +28,16 @@ class AudioCapture:
             print("Audio Stream is already running.")
             return
         
+        block_size_to_use = self.frame_length
+        if block_size_to_use is None:
+            print()
+            block_size_to_use = 1024
+        
         print("Starting audio stream...")
         self.running = True
         self.stream = sd.InputStream(
             samplerate=16000,
+            blocksize=block_size_to_use,
             device=None,
             channels=1,
             dtype='int16',
