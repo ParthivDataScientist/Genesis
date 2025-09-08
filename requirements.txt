@@ -2,3 +2,5 @@ sounddevice
 numpy
 pvporcupine
 resemblyzer
+faster-whisper
+torch
