@@ -3,7 +3,6 @@ import os
 import sounddevice as sd
 import numpy as np
 import time
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..',"..")))
 
 from src.python.core.audio_capture import AudioCapture

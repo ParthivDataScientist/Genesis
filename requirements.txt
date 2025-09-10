@@ -4,3 +4,4 @@ pvporcupine
 resemblyzer
 faster-whisper
 torch
+requests  

@@ -19,3 +19,15 @@ KEYWORD_PATHS = [r"C:\Users\parth\OneDrive\Documents\Genesis\models\it--s-me_en_
 WAKE_WORD_NAME = "it's me"
 
 
+
+#-------ollama / Planner configuration ----------------#
+OLLAMA_API_BASE_URL = "http://localhost:11434/api/generate"
+OLLAMA_MODEL_NAME = "gemma:2b" # Or "gemma:7b" 
+
+CONVERSATION_SYSTEM_PROMPT = """You are Genesis, a friendly and helpful AI assistant.
+Your goal is to have a natural, engaging conversation with the user.
+Respond directly to the user's question or statement in a clear and concise way.
+
+User: {user_command}
+Genesis:
+"""
