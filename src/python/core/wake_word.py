@@ -4,7 +4,7 @@ import struct
 from config import *
 
 
-class WakeWordDeteector:
+class WakeWordDetector:
     
     def __init__(self):
         try:

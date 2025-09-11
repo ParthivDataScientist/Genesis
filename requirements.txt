@@ -5,3 +5,4 @@ resemblyzer
 faster-whisper
 torch
 requests  
+pyttsx3
