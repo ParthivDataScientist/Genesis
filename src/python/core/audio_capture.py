@@ -36,11 +36,11 @@ class AudioCapture:
         print("Starting audio stream...")
         self.running = True
         self.stream = sd.InputStream(
-            samplerate=16000,
-            blocksize=block_size_to_use,
-            device=None,
-            channels=1,
-            dtype='int16',
+            samplerate=16000,    
+            blocksize=block_size_to_use,     
+            device=None,                     # Default Microphone 
+            channels=1,                      # Mono or Sterio
+            dtype='int16',                   # 16-bit integer (range: –32768 to 32767)
             callback=self._audio_callback    # Add this to queue
         )
         self.stream.start()
