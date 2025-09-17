@@ -22,6 +22,8 @@ from config import SAMPLE_RATE
 # 'listening' -> Waiting for wake word
 # 'recording' -> Wake word detected, now recording a command
 # 'processing' -> Transcribing and thinking of a response
+
+
 app_state = {"status": "listening"} 
 
 def main():
@@ -45,6 +47,8 @@ def main():
     # Start capturing audio in the background
     audio_capture.start_stream()
     print("\nGenesis is now listening for the wake word...")
+
+    command_audio = None  # Initialize command_audio to None
 
     try:
         while True:
@@ -71,29 +75,34 @@ def main():
                     
                     # Combine the recorded chunks into a single audio clip
                     command_audio = np.concatenate(command_audio_frames, axis=0)
+                    print(command_audio.shape)
                     print("Recording complete.")
                     
                     app_state["status"] = "processing"
-
             elif app_state["status"] == "processing":
-                print("Transcribing command...")
-                # --- 4. Transcribe ---
-                command_text = stt.transcribe(command_audio.flatten())
-                print(f"You said: '{command_text}'")
+                print("Transcribing Command")
 
-                if command_text:
-                    # --- 5. Think ---
-                    print("Getting response from LLM...")
-                    ai_response = conversation_manager.get_response(command_text)
-                    print(f"Genesis says: '{ai_response}'")
+                # ----4. transcribe -----
+                if command_audio is not None and command_audio.size > 0:
+                    audio_for_stt = command_audio.astype(np.float32) / 32768.0
+                    command_text = stt.transcribe(audio_data = audio_for_stt.flatten())
+                    print(f"You said: '{command_text}'")
 
-                    # --- 6. Speak ---
-                    tts.speak(ai_response)
+                    if command_text and len(command_text.strip()) > 0:
+                        print("genesis responce from LLM")
+                        ai_response_gen = conversation_manager.get_response_stream(command_text)
+                        ai_response = "".join(ai_response_gen) if ai_response_gen is not None else None
+                        print(f"Genesis says: '{ai_response}'")
+                        tts.speak(text = ai_response if ai_response is not None else "I'm sorry, I don't have a response.")
+                    
+                    else:
+                        print("Could not transcribe the command.")
+                        tts.speak("I'm sorry, I didn't catch that.")
                 else:
-                    print("Could not transcribe the command.")
+                    print("No command audio to transcribe.")
                     tts.speak("I'm sorry, I didn't catch that.")
-                
-                # --- 7. Return to Listening ---
+
+                command_audio = None
                 print("\nReturning to listening for wake word...")
                 app_state["status"] = "listening"
 
@@ -106,3 +115,11 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+                    
+
+
+
+
+
+          
