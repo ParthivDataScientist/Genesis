@@ -1,10 +1,12 @@
 import pyttsx3
 
 class TextToSpeech:
-    def __init__(self):
+    def __init__(self,rate = 180, volumne = 1.0):
         try:
             self.engine = pyttsx3.init()
             print("Text-to-Speech engine initialized successfully.")
+            self.engine.setProperty('rate', rate)
+            self.engine.setProperty('volume', volumne)
         except Exception as e:
             print(f"Error initializing Text-to-Speech engine: {e}")
             self.engine = None
@@ -19,7 +21,7 @@ class TextToSpeech:
             return
 
         try:
-            self.engine = pyttsx3.init()
+            # self.engine = pyttsx3.init()
             self.engine.say(text)
             self.engine.runAndWait()
         except Exception as e:
