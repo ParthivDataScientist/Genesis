@@ -53,8 +53,10 @@ class AudioCapture:
             return
         
         print("Stopping the audio stream...")
-        self.stream.stop()
-        self.stream.close()
+        if self.stream is not None:
+            self.stream.stop()
+            self.stream.close()
+            self.stream = None
         self.running = False
         print('Audio stream stopped.')
 

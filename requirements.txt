@@ -5,4 +5,5 @@ resemblyzer
 faster-whisper
 torch
 requests  
-pyttsx3
+TTS
+soundfile
