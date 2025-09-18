@@ -64,11 +64,10 @@ class TextToSpeech:
             print("Cannot speak, TTS engine not initialized.")
             return
 
-<<<<<<< HEAD
         if not text or not isinstance(text, str) or len(text.strip()) == 0:
             print("No valid text to speak.")
             return
-=======
+
         try:
             # self.engine = pyttsx3.init()
             self.engine.say(text)
@@ -76,10 +75,8 @@ class TextToSpeech:
         except Exception as e:
             print(f"Error during TTS: {e}")
 
-
->>>>>>> 5bba01104110a3814e04607be0676d9ed7a9cbfe
-
+        # i have made some changes
         # Start the synthesis and playback in a background thread
-        thread = threading.Thread(target=self._speak_thread, args=(text,))
+        thread = threading.Thread(target=self._speck_thread, args=(text,))
         thread.daemon = True
         thread.start()
