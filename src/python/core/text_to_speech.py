@@ -11,8 +11,9 @@ OUTPUT_WAV_PATH ='temp_speech.wav'
 
 
 class TextToSpeech:
-    def __init__(self):
+    def __init__(self,rate = 180, volumne = 1.0):
         try:
+<<<<<<< HEAD
             print("Initializing Coqui XTTSv2 engine.. This may take a moment.")
             self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
             print(f"uning dvice {self.device}")
@@ -20,6 +21,12 @@ class TextToSpeech:
             self.tss = TTS(MODEL_NAME, gpu = (self.device == 'cuda'))
             self.lock = threading.Lock()
             print("✅ Coqui XTTSv2 engine initialized successfully.")
+=======
+            self.engine = pyttsx3.init()
+            print("Text-to-Speech engine initialized successfully.")
+            self.engine.setProperty('rate', rate)
+            self.engine.setProperty('volume', volumne)
+>>>>>>> 5bba01104110a3814e04607be0676d9ed7a9cbfe
         except Exception as e:
             print(f"CRITICAL: Error initializing Coqui TTS engine: {e}")
             self.tts = None
@@ -60,9 +67,20 @@ class TextToSpeech:
             print("Cannot speak, TTS engine not initialized.")
             return
 
+<<<<<<< HEAD
         if not text or not isinstance(text, str) or len(text.strip()) == 0:
             print("No valid text to speak.")
             return
+=======
+        try:
+            # self.engine = pyttsx3.init()
+            self.engine.say(text)
+            self.engine.runAndWait()
+        except Exception as e:
+            print(f"Error during TTS: {e}")
+
+
+>>>>>>> 5bba01104110a3814e04607be0676d9ed7a9cbfe
 
         # Start the synthesis and playback in a background thread
         thread = threading.Thread(target=self._speak_thread, args=(text,))
