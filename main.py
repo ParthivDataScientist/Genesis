@@ -10,7 +10,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..','..')))
 from src.python.core.audio_capture import AudioCapture
 from src.python.core.conversation import ConversationManager
-from src.python.core.text_to_speech import TextToSpeech
+from src.python.core.text_to_speech import Text2Speech
 from src.python.core.SpeachToText import SpeechToText
 from src.python.core.wake_word import WakeWordDetector
 
@@ -42,7 +42,7 @@ def main():
     audio_capture = AudioCapture(frame_length=wake_word_detector.frame_length)
     stt = SpeechToText(model_size="base.en")
     conversation_manager = ConversationManager()
-    tts = TextToSpeech()
+    tts = Text2Speech()
     
     # Start capturing audio in the background
     audio_capture.start_stream()
